@@ -1,9 +1,9 @@
-//jshint esversion:6
-
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
+const encrypt = require("mongoose-encryption");
 
 const app = express();
 
@@ -15,11 +15,14 @@ app.use(bodyParser.urlencoded({
 
 mongoose.connect("mongodb://localhost:27017/microrandomDB", { useNewUrlParser: true, useUnifiedTopology: true});
 
-const teacherSchema = {
+const teacherSchema = new mongoose.Schema ({
   name: String,
   email: String,
   password: String
-}
+});
+
+teacherSchema.plugin(encrypt, {secret: process.env.SECRET, encryptedFields: ["password"] });
+
 const Teacher = new mongoose.model("Teacher", teacherSchema);
 
 app.get("/", function(req, res) {
