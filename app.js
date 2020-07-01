@@ -3,7 +3,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
-const encrypt = require("mongoose-encryption");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 const app = express();
 
@@ -21,8 +22,6 @@ const teacherSchema = new mongoose.Schema ({
   password: String
 });
 
-teacherSchema.plugin(encrypt, {secret: process.env.SECRET, encryptedFields: ["password"] });
-
 const Teacher = new mongoose.model("Teacher", teacherSchema);
 
 app.get("/", function(req, res) {
@@ -38,17 +37,19 @@ app.get("/register", function(req, res) {
 });
 
 app.post("/register", function(req, res) {
-  const newTeacher = new Teacher({
-    name: req.body.fullname,
-    email: req.body.email,
-    password: req.body.password
-  });
-  newTeacher.save(function(err) {
-    if(err) {
-      console.log(err);
-    } else {
-      res.render("generate");
-    }
+  bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
+    const newTeacher = new Teacher({
+      name: req.body.fullname,
+      email: req.body.email,
+      password: hash
+    });
+    newTeacher.save(function(err) {
+      if(err) {
+        console.log(err);
+      } else {
+        res.render("generate");
+      }
+    });
   });
 });
 
@@ -61,9 +62,11 @@ app.post("/login", function(req, res) {
       console.log(err);
     } else {
       if(foundTeacher) {
-        if(foundTeacher.password === password) {
-          res.render("generate");
-        }
+        bcrypt.compare(password, foundTeacher.password, function(err, result) {
+          if (result === true) {
+            res.render("generate");
+          }
+        });
       }
     }
   });
