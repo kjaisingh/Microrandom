@@ -29,25 +29,47 @@ const memberTwo = new Member({
   description: "rohit@microrandom.com"
 });
 const memberThree = new Member({
-  name: "Jack Tobey",
-  description: "jack@microrandom.com"
+  name: "Rebecca Tobey",
+  description: "becca@microrandom.com"
 });
 const memberFour = new Member({
   name: "Kevin Lee",
   description: "kevin@microrandom.com"
 });
 const memberFive = new Member({
-  name: "Jamal Harris",
-  description: "jamal@microrandom.com"
+  name: "Kayla Harris",
+  description: "kayla@microrandom.com"
 });
-const defaultMembers = [memberOne, memberTwo, memberThree, memberFour, memberFive];
+const memberSix = new Member({
+  name: "Jeffery Hughes",
+  description: "jeff@microrandom.com"
+});
+const memberSeven = new Member({
+  name: "Noor Ismail",
+  description: "noor@microrandom.com"
+});
+const memberEight = new Member({
+  name: "Obadiye Diallo",
+  description: "obadiye@microrandom.com"
+});
+const memberNine = new Member({
+  name: "William Barton",
+  description: "will@microrandom.com"
+});
+const memberTen = new Member({
+  name: "Samantha Kim",
+  description: "samantha@microrandom.com"
+});
+const defaultMembers = [
+  memberOne, memberTwo, memberThree, memberFour, memberFive,
+  memberSix, memberSeven, memberEight, memberNine, memberTen
+];
 
 const defaultGroup = new Group({
   name: "CIS 121",
   description: "Your default class.",
   members: defaultMembers
 });
-console.log(defaultGroup.members);
 const defaultGroups = [defaultGroup];
 
 
@@ -80,7 +102,7 @@ passport.deserializeUser(User.deserializeUser());
 
 
 // -------------------------
-// GET REQUESTS
+// GET REQUESTS - AUTH
 // -------------------------
 app.get("/", function(req, res) {
   res.render("home");
@@ -99,17 +121,9 @@ app.get("/logout", function(req, res) {
   res.redirect("/");
 });
 
-app.get("/generate", function(req, res) {
-  if(req.isAuthenticated()) {
-    res.render("generate");
-  } else {
-    res.redirect("/login");
-  }
-});
-
 
 // -------------------------
-// POST REQUESTS
+// POST REQUESTS - AUTH
 // -------------------------
 app.post("/register", function(req, res) {
   User.register({
@@ -146,6 +160,55 @@ app.post("/login", function(req, res) {
     }
   });
 });
+
+
+// -------------------------
+// GET REQUESTS - APP
+// -------------------------
+app.get("/generate", function(req, res) {
+  if(req.isAuthenticated()) {
+    const currentUsername = req.user.username;
+    const result = User.findOne({ username: currentUsername }, function(err, foundUser) {
+      const userGroups = foundUser.groups;
+      res.render("generate", {groups: userGroups});
+    });
+  } else {
+    res.redirect("/login");
+  }
+});
+
+app.get("/manage", function(req, res) {
+  if(req.isAuthenticated()) {
+    console.log("Made it!");
+    res.render("manage");
+  } else {
+    res.redirect("/login");
+  }
+});
+
+app.get("/preferences", function(req, res) {
+  if(req.isAuthenticated()) {
+    console.log("preferences");
+    res.render("preferences");
+  } else {
+    res.redirect("/login");
+  }
+});
+
+// adding new member to a particular group
+/*
+foundUser.groups[0].members.push(new Member({
+  name: "Karan Jaisingh",
+  email: "karan@microrandom.com"
+}));
+foundUser.save();
+*/
+
+
+// -------------------------
+// POST REQUESTS - APP
+// -------------------------
+
 
 
 // -------------------------

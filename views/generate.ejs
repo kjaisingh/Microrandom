@@ -1,15 +1,37 @@
 <%- include('partials/header') %>
+<%- include('partials/navigation') %>
 
 <div class="jumbotron text-center">
-  <div class="container">
-    <i class="fas fa-key fa-6x"></i>
-    <h1 class="display-3">You've Discovered My Secret!</h1>
-    <p class="secret-text">Jack Bauer is my hero.</p>
-    <hr>
 
+  <div class="container">
+    <i class="fas fa-hat-wizard fa-3x"></i>
+    <h1 class="display-3">Generate</h1>
+    <hr>
     <a class="btn btn-light btn-lg" href="/logout" role="button">Log Out</a>
-    <a class="btn btn-dark btn-lg" href="/submit" role="button">Submit a Secret</a>
   </div>
+
+  <div class="group-list">
+    <% const numGroups = groups.length %>
+    <% var index = 0 %>
+    <% var i = 0 %>
+    <table style="width:100%">
+      <% groups.forEach(function(item) { %>
+        <% if (i === 0) { %>
+          <tr>
+        <% } %>
+        <td>
+          <h2><%= item.name %></h2>
+        </td>
+        <% i = i + 1%>
+        <% index = index + 1%>
+        <% if (i === 3 || index === numGroups) { %>
+          </tr>
+          <% i = 0 %>
+        <% } %>
+      <%  }) %>
+    </table>
+  </div>
+
 </div>
 
 <%- include('partials/footer') %>
