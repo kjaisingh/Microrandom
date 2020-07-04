@@ -1,37 +1,42 @@
-<%- include('partials/header') %>
-<%- include('partials/navigation') %>
+<%- include('./partials/header') %>
+<%- include('./partials/navigation') %>
 
 <div class="jumbotron text-center">
-
   <div class="container">
     <i class="fas fa-hat-wizard fa-3x"></i>
-    <h1 class="display-3">Generate</h1>
+    <h1 class="display-5">Generate</h1>
     <hr>
-    <a class="btn btn-light btn-lg" href="/logout" role="button">Log Out</a>
   </div>
+</div>
 
-  <div class="group-list">
+
+<section class="pricing py-5">
+  <div class="container">
     <% const numGroups = groups.length %>
     <% var index = 0 %>
     <% var i = 0 %>
-    <table style="width:100%">
-      <% groups.forEach(function(item) { %>
-        <% if (i === 0) { %>
-          <tr>
-        <% } %>
-        <td>
-          <h2><%= item.name %></h2>
-        </td>
-        <% i = i + 1%>
-        <% index = index + 1%>
-        <% if (i === 3 || index === numGroups) { %>
-          </tr>
-          <% i = 0 %>
-        <% } %>
-      <%  }) %>
-    </table>
+    <% groups.forEach(function(item) { %>
+      <% if (i === 0) { %>
+          <div class="row d-flex align-items-stretch">
+      <% } %>
+      <div class="col-lg-4 d-flex align-items-stretch">
+        <div class="card mb-5 mb-lg-0 h-100 w-100">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title text-muted text-uppercase text-center"><%= item.description %></h5>
+            <h6 class="card-price text-center"><%= item.name %></span></h6>
+            <hr>
+            <a href="/<%=userId%>/<%=item._id%>/generate" class="btn btn-block btn-primary text-uppercase mt-auto">Choose</a>
+          </div>
+        </div>
+      </div>
+      <% i = i + 1%>
+      <% index = index + 1%>
+      <% if (i === 3 || index === numGroups) { %>
+        </div>
+        <% i = 0 %>
+      <% } %>
+    <%  }) %>
   </div>
-
-</div>
+</section>
 
 <%- include('partials/footer') %>

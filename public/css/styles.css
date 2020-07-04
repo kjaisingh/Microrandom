@@ -1,22 +1,17 @@
-
+/* STANDARDIZED COMPONENTS */
 body {
   background-color: #E8ECEF;
 }
 
 .jumbotron {
   padding-top: 100px;
+  padding-bottom: 0px;
+  margin-bottom: 20px;
 }
 
 .centered {
     padding-top: 200px;
     text-align: center;
-}
-
-.secret-text {
-  text-align: center;
-  font-size: 2rem;
-  color: #fff;
-  background-color: #000;
 }
 
 .navbar {
@@ -30,17 +25,28 @@ body {
   margin-left: 100px;
 }
 
+.center-div {
+  text-align: center;
+}
+
+/* GENERATE PAGE */
+body {
+  background-color: #E8ECEF;
+}
+.group-item {
+  width: 25%;
+}
+
+.col-lg-4 {
+  margin-top: 20px !important;
+}
+
 li {
     margin-right: 200px;
 }
 
-.group-list {
-  padding-top: 50px;
-}
-
 section.pricing {
-  background: #007bff;
-  background: linear-gradient(to right, #0062E6, #33AEFF);
+  background-color: #E8ECEF;
 }
 
 .pricing .card {
@@ -97,4 +103,11 @@ section.pricing {
   .pricing .card:hover .btn {
     opacity: 1;
   }
+}
+
+/*
+GROUP PAGE
+*/
+.table {
+  text-align: center;
 }

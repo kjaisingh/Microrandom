@@ -21,56 +21,84 @@ const Member = require('./models/members');
 // -------------------------
 const memberOne = new Member({
   name: "John Doe",
-  description: "john@microrandom.com"
+  email: "john@microrandom.com"
 });
 
 const memberTwo = new Member({
   name: "Rohit Singh",
-  description: "rohit@microrandom.com"
+  email: "rohit@microrandom.com"
 });
 const memberThree = new Member({
   name: "Rebecca Tobey",
-  description: "becca@microrandom.com"
+  email: "becca@microrandom.com"
 });
 const memberFour = new Member({
   name: "Kevin Lee",
-  description: "kevin@microrandom.com"
+  email: "kevin@microrandom.com"
 });
 const memberFive = new Member({
   name: "Kayla Harris",
-  description: "kayla@microrandom.com"
+  email: "kayla@microrandom.com"
 });
 const memberSix = new Member({
   name: "Jeffery Hughes",
-  description: "jeff@microrandom.com"
+  email: "jeff@microrandom.com"
 });
 const memberSeven = new Member({
   name: "Noor Ismail",
-  description: "noor@microrandom.com"
+  email: "noor@microrandom.com"
 });
 const memberEight = new Member({
   name: "Obadiye Diallo",
-  description: "obadiye@microrandom.com"
+  email: "obadiye@microrandom.com"
 });
 const memberNine = new Member({
   name: "William Barton",
-  description: "will@microrandom.com"
+  email: "will@microrandom.com"
 });
 const memberTen = new Member({
   name: "Samantha Kim",
-  description: "samantha@microrandom.com"
+  email: "samantha@microrandom.com"
 });
-const defaultMembers = [
-  memberOne, memberTwo, memberThree, memberFour, memberFive,
-  memberSix, memberSeven, memberEight, memberNine, memberTen
+
+const defaultMembersOne = [
+  memberOne, memberTwo, memberThree
 ];
 
-const defaultGroup = new Group({
-  name: "CIS 121",
-  description: "Your default class.",
-  members: defaultMembers
+const defaultMembersTwo = [
+  memberFour, memberFive, memberSix
+];
+
+const defaultMembersThree = [
+  memberSeven, memberEight
+];
+
+const defaultMembersFour = [
+  memberNine, memberTen
+];
+
+const defaultGroupOne = new Group({
+  name: "CIS 120",
+  description: "Programming Languages & Technologies.",
+  members: defaultMembersOne
 });
-const defaultGroups = [defaultGroup];
+const defaultGroupTwo = new Group({
+  name: "CIS 121",
+  description: "Data Structures & Algorithms.",
+  members: defaultMembersTwo
+});
+const defaultGroupThree = new Group({
+  name: "CIS 160",
+  description: "Mathematics of Computer Science.",
+  members: defaultMembersThree
+});
+const defaultGroupFour = new Group({
+  name: "CIS 240",
+  description: "Computer Architecutre",
+  members: defaultMembersFour
+});
+
+const defaultGroups = [defaultGroupOne, defaultGroupTwo, defaultGroupThree, defaultGroupFour];
 
 
 // -------------------------
@@ -163,38 +191,103 @@ app.post("/login", function(req, res) {
 
 
 // -------------------------
-// GET REQUESTS - APP
+// GET REQUESTS - GENERATE
 // -------------------------
 app.get("/generate", function(req, res) {
   if(req.isAuthenticated()) {
     const currentUsername = req.user.username;
     const result = User.findOne({ username: currentUsername }, function(err, foundUser) {
       const userGroups = foundUser.groups;
-      res.render("generate", {groups: userGroups});
+      res.render("generate", {userId: foundUser._id, groups: userGroups});
     });
   } else {
     res.redirect("/login");
   }
 });
 
-app.get("/manage", function(req, res) {
+app.get("/:userId/:groupId/generate", function(req, res) {
+  const requestedUserId = req.params.userId;
+  const requestedGroupId = req.params.groupId;
+
   if(req.isAuthenticated()) {
-    console.log("Made it!");
-    res.render("manage");
+    const result = User.findOne({ _id: requestedUserId }, function(err, foundUser) {
+      const foundGroup = foundUser.groups.id(requestedGroupId);
+      res.render("group", { groupItem: foundGroup });
+    });
   } else {
     res.redirect("/login");
   }
 });
 
+
+// -------------------------
+// GET REQUESTS - MANAGE
+// -------------------------
+app.get("/manage", function(req, res) {
+  if(req.isAuthenticated()) {
+    const currentUsername = req.user.username;
+    const result = User.findOne({ username: currentUsername }, function(err, foundUser) {
+      const userGroups = foundUser.groups;
+      res.render("manage", {userId: foundUser._id, groups: userGroups});
+    });
+  } else {
+    res.redirect(req.baseUrl + "/login");
+  }
+});
+
+app.get("/:userId/:groupId/manage", function(req, res) {
+  const requestedUserId = req.params.userId;
+  const requestedGroupId = req.params.groupId;
+
+  if(req.isAuthenticated()) {
+    const result = User.findOne({ _id: requestedUserId }, function(err, foundUser) {
+      const foundGroup = foundUser.groups.id(requestedGroupId);
+      res.render("modify", {userId: foundUser._id, groupItem: foundGroup });
+    });
+  } else {
+    res.redirect(req.baseUrl + "/login");
+  }
+});
+
 app.get("/preferences", function(req, res) {
   if(req.isAuthenticated()) {
-    console.log("preferences");
     res.render("preferences");
   } else {
     res.redirect("/login");
   }
 });
 
+
+
+// -------------------------
+// POST REQUESTS - GENERATE
+// -------------------------
+
+
+// -------------------------
+// POST REQUESTS - MANAGE
+// -------------------------
+app.post("/deleteMember", function(req, res) {
+  const requestedUserId = req.body.userId;
+  const requestedGroupId = req.body.groupId;
+  const requestedMemberId = req.body.memberId;
+
+  if(req.isAuthenticated()) {
+    const result = User.findOne({ _id: requestedUserId }, function(err, foundUser) {
+      const foundGroup = foundUser.groups.id(requestedGroupId);
+      foundGroup.members.id(requestedMemberId).remove();
+      foundUser.save();
+      res.redirect(req.baseUrl + "/" + requestedUserId + "/" + requestedGroupId + "/" + "manage");
+    });
+  } else {
+    res.redirect(req.baseUrl + "/login");
+  }
+});
+
+
+// -------------------------
+// SETUP
+// -------------------------
 // adding new member to a particular group
 /*
 foundUser.groups[0].members.push(new Member({
@@ -204,16 +297,6 @@ foundUser.groups[0].members.push(new Member({
 foundUser.save();
 */
 
-
-// -------------------------
-// POST REQUESTS - APP
-// -------------------------
-
-
-
-// -------------------------
-// SETUP
-// -------------------------
 app.listen(3000, function() {
   console.log("Server started on port 3000.");
 });

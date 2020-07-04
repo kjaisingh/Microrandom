@@ -1,0 +1,50 @@
+<%- include('partials/header') %>
+<%- include('partials/navigation') %>
+
+<div class="jumbotron text-center">
+  <div class="container">
+    <i class="fas fa-hat-wizard fa-3x"></i>
+    <h1 class="display-5"><%=groupItem.name%></h1>
+    <h3 class="display-5"><%=groupItem.description%></h3>
+    <hr>
+  </div>
+</div>
+
+
+<div class="membertable">
+  <% const numMembers = groupItem.members.length %>
+  <% var index = 0 %>
+  <table class="table" style="border-collapse: collapse; border: none;>
+    <thead>
+      <tr style="border: none;">
+        <th scope="col" style="border: none;">#</th>
+        <th scope="col" style="border: none;">Name</th>
+        <th scope="col" style="border: none;">Email</th>
+        <th scope="col" style="border: none;">Options</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% groupItem.members.forEach(function(item) { %>
+        <tr style="border: none;">
+          <th scope="row" style="border: none;"><%=index + 1%></th>
+          <td style="border: none;"><%=item.name%></td>
+          <td style="border: none;"><%=item.email%></td>
+          <td>
+            <form action="/deleteMember" method="post">
+              <button type="submit" name="deleteButton" class="btn">
+                <i class="fa fa-trash"></i>
+              </button>
+              <input type="hidden" name="userId" value="<%=userId%>">
+              <input type="hidden" name="groupId" value="<%=groupItem._id%>">
+              <input type="hidden" name="memberId" value="<%=item._id%>">
+            </form>
+          </td>
+        </tr>
+        <% index = index + 1%>
+      <%  }) %>
+    </tbody>
+  </table>
+</div>
+
+
+<%- include('partials/footer') %>
