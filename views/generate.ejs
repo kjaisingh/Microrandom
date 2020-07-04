@@ -9,6 +9,13 @@
   </div>
 </div>
 
+<div class="center-div">
+  <a href="/create">
+    <button name="deleteButton" class="btn">
+      <i class="fa fa-plus"></i>   Create new group
+    </button>
+  </a>
+</div>
 
 <section class="pricing py-5">
   <div class="container">
@@ -26,6 +33,15 @@
             <h6 class="card-price text-center"><%= item.name %></span></h6>
             <hr>
             <a href="/<%=userId%>/<%=item._id%>/generate" class="btn btn-block btn-primary text-uppercase mt-auto">Choose</a>
+            <div class="groupdelete">
+              <form action="/deleteGroup" method="post">
+                <button type="submit" name="deleteButton" class="btn">
+                  <i class="fa fa-trash"></i>
+                </button>
+                <input type="hidden" name="userId" value="<%=userId%>">
+                <input type="hidden" name="groupId" value="<%=item._id%>">
+              </form>
+            </div>
           </div>
         </div>
       </div>

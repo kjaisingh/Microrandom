@@ -1,12 +1,11 @@
-/* STANDARDIZED COMPONENTS */
 body {
   background-color: #E8ECEF;
 }
 
 .jumbotron {
-  padding-top: 100px;
+  padding-top: 0px;
   padding-bottom: 0px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .centered {
@@ -16,23 +15,13 @@ body {
 
 .navbar {
   background-color: #E8ECEF;
-  position: absolute;
-  left: 50%;
-  transform: translatex(-50%);
-  padding-top: 20px;
-  padding-bottom: 20px;
-  font-size: 20px;
-  margin-left: 100px;
+  font-size: 16px;
 }
 
-.center-div {
-  text-align: center;
-}
-
-/* GENERATE PAGE */
 body {
   background-color: #E8ECEF;
 }
+
 .group-item {
   width: 25%;
 }
@@ -105,17 +94,10 @@ section.pricing {
   }
 }
 
-/*
-GROUP PAGE
-*/
 .table {
   margin-top: 3%;
   text-align: center;
 }
-
-/*
-MANAGE PAGE
-*/
 
 .groupdelete {
   text-align: center;
@@ -136,6 +118,9 @@ MANAGE PAGE
 }
 
 .center-div {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  text-align: center;
   width: 50%;
   margin: 0 auto;
 }
