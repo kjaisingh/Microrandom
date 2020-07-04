@@ -249,14 +249,16 @@ app.get("/:userId/:groupId/manage", function(req, res) {
   }
 });
 
-app.get("/preferences", function(req, res) {
+app.get("/create", function(req, res) {
   if(req.isAuthenticated()) {
-    res.render("preferences");
+    const currentUsername = req.user.username;
+    const result = User.findOne({ username: currentUsername }, function(err, foundUser) {
+      res.render("create");
+    });
   } else {
-    res.redirect("/login");
+    res.redirect(req.baseUrl + "/login");
   }
 });
-
 
 
 // -------------------------
@@ -297,6 +299,40 @@ app.post("/deleteGroup", function(req, res) {
     });
   } else {
     res.redirect(req.baseUrl + "/login");
+  }
+});
+
+app.post("/createGroup", function(req, res) {
+  console.log(req.body.inputGroupName);
+  console.log(req.body.inputGroupDescription);
+  if(req.isAuthenticated()) {
+    const currentUsername = req.user.username;
+    const result = User.findOne({ username: currentUsername }, function(err, foundUser) {
+      foundUser.groups.push(new Group({
+        name: req.body.inputGroupName,
+        description: req.body.inputGroupDescription
+      }));
+      foundUser.save();
+    });
+    res.redirect(req.baseUrl + "/manage");
+  } else {
+    res.redirect(req.baseUrl + "/login");
+  }
+});
+
+
+// -------------------------
+// REQUESTS - MISC.
+// -------------------------
+app.get("/:userId/:groupId/join-group", function(req, res) {
+  res.render("join");
+});
+
+app.get("/preferences", function(req, res) {
+  if(req.isAuthenticated()) {
+    res.render("preferences");
+  } else {
+    res.redirect("/login");
   }
 });
 

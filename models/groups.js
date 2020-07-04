@@ -9,7 +9,7 @@ const Schema = mongoose.Schema;
 const groupSchema = new mongoose.Schema ({
   name: { type: String, default: "CIS 120" },
   description: { type: String, default: "My brilliant class." },
-  members: [memberSchema]
+  members: {type: [memberSchema], default: []}
 });
 
 module.exports = mongoose.model("Group", groupSchema);

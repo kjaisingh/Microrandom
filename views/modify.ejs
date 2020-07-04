@@ -6,7 +6,6 @@
     <i class="fas fa-hat-wizard fa-3x"></i>
     <h1 class="display-5"><%=groupItem.name%></h1>
     <h3 class="display-5"><%=groupItem.description%></h3>
-    <hr>
   </div>
 </div>
 
@@ -49,12 +48,33 @@
 <div class="groupdelete">
   <form action="/deleteGroup" method="post">
     <button type="submit" name="deleteButton" class="btn">
-      Delete Group<i class="fa fa-trash"></i>
+      <i class="fa fa-trash"></i>   Delete Group
     </button>
     <input type="hidden" name="userId" value="<%=userId%>">
     <input type="hidden" name="groupId" value="<%=groupItem._id%>">
   </form>
 </div>
 
+<div class="grouplink">
+  <div class='child inline-block-child'>
+    <p>Group Link:</p>
+  </div>
+  <div class='child inline-block-child'>
+    <p class='child inline-block-child'id="p1">localhost:3000/<%=userId%>/<%=groupItem._id%>/join-group</p>
+    <a class='btn child inline-block-child' onclick="copyToClipboard('#p1')">
+      <i class="fa fa-clone"></i>
+    </a>
+  </div>
+</div>
+
+<script>
+function copyToClipboard(element) {
+  var $temp = $("<input>");
+  $("body").append($temp);
+  $temp.val($(element).text()).select();
+  document.execCommand("copy");
+  $temp.remove();
+}
+</script>
 
 <%- include('partials/footer') %>

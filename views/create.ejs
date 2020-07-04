@@ -1,0 +1,30 @@
+<%- include('partials/header') %>
+<%- include('partials/navigation') %>
+
+<div class="jumbotron text-center">
+  <div class="container">
+    <i class="fas fa-hat-wizard fa-3x"></i>
+    <h1 class="display-5">Create</h1>
+    <hr>
+  </div>
+</div>
+
+<div class="center-div">
+  <form action="/createGroup" method="post">
+    <div class="form-group text-center">
+      <label for="inputGroupName">Group Name</label>
+      <input type="name" class="form-control" name="inputGroupName" aria-describedby="groupHelp" placeholder="Enter group name" required>
+      <small id="groupHelp" class="form-text text-muted">A name that explains the purpose of the group.</small>
+    </div>
+    <div class="form-group text-center">
+      <label for="inputGroupDescription">Description</label>
+      <input type="description" class="form-control" name="inputGroupDescription" aria-describedby="descriptionHelp" placeholder="Enter group description" required>
+      <small id="descriptionHelp" class="form-text text-muted">A one-line description that provides additional information about the group.</small>
+    </div>
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary text-center">Create</button>
+    </div>
+  </form>
+</div>
+
+<%- include('partials/footer') %>

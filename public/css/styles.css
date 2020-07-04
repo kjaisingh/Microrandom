@@ -109,12 +109,37 @@ section.pricing {
 GROUP PAGE
 */
 .table {
+  margin-top: 3%;
   text-align: center;
 }
 
 /*
 MANAGE PAGE
 */
+
 .groupdelete {
   text-align: center;
+}
+
+.grouplink {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.grouplink .child {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.inline-block-child {
+  display: inline-block;
+}
+
+.center-div {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 7%;
 }
