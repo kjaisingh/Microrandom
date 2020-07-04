@@ -284,6 +284,22 @@ app.post("/deleteMember", function(req, res) {
   }
 });
 
+app.post("/deleteGroup", function(req, res) {
+  const requestedUserId = req.body.userId;
+  const requestedGroupId = req.body.groupId;
+
+  if(req.isAuthenticated()) {
+    const result = User.findOne({ _id: requestedUserId }, function(err, foundUser) {
+      const foundGroup = foundUser.groups.id(requestedGroupId);
+      foundGroup.remove();
+      foundUser.save();
+      res.redirect(req.baseUrl + "/manage");
+    });
+  } else {
+    res.redirect(req.baseUrl + "/login");
+  }
+});
+
 
 // -------------------------
 // SETUP

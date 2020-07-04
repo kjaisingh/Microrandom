@@ -46,5 +46,15 @@
   </table>
 </div>
 
+<div class="groupdelete">
+  <form action="/deleteGroup" method="post">
+    <button type="submit" name="deleteButton" class="btn">
+      Delete Group<i class="fa fa-trash"></i>
+    </button>
+    <input type="hidden" name="userId" value="<%=userId%>">
+    <input type="hidden" name="groupId" value="<%=groupItem._id%>">
+  </form>
+</div>
+
 
 <%- include('partials/footer') %>
