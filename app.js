@@ -191,11 +191,12 @@ app.post("/login", function(req, res) {
 
 
 // -------------------------
-// GET REQUESTS
+// GET REQUESTS - MAIN
 // -------------------------
 app.get("/generate", function(req, res) {
   if(req.isAuthenticated()) {
     const currentUsername = req.user.username;
+
     const result = User.findOne({ username: currentUsername }, function(err, foundUser) {
       const userGroups = foundUser.groups;
       res.render("generate", {userId: foundUser._id, groups: userGroups});
@@ -208,6 +209,7 @@ app.get("/generate", function(req, res) {
 app.get("/create", function(req, res) {
   if(req.isAuthenticated()) {
     const currentUsername = req.user.username;
+
     const result = User.findOne({ username: currentUsername }, function(err, foundUser) {
       res.render("create");
     });
@@ -216,12 +218,13 @@ app.get("/create", function(req, res) {
   }
 });
 
-app.get("/:userId/:groupId/generate", function(req, res) {
-  const requestedUserId = req.params.userId;
-  const requestedGroupId = req.params.groupId;
-
+app.get("/:groupId/generate", function(req, res) {
   if(req.isAuthenticated()) {
-    const result = User.findOne({ _id: requestedUserId }, function(err, foundUser) {
+    const currentUsername = req.user.username;
+    const requestedGroupId = req.params.groupId;
+
+    const result = User.findOne({ username: currentUsername }, function(err, foundUser) {
+      const requestedUserId = foundUser._id;
       const foundGroup = foundUser.groups.id(requestedGroupId);
       res.render("group", { userId: requestedUserId, groupItem: foundGroup });
     });
@@ -234,12 +237,11 @@ app.get("/:userId/:groupId/options", function(req, res) {
   res.render("options");
 });
 
+
 // -------------------------
-// POST REQUESTS
+// POST REQUESTS - MAIN
 // -------------------------
 app.post("/createGroup", function(req, res) {
-  console.log(req.body.inputGroupName);
-  console.log(req.body.inputGroupDescription);
   if(req.isAuthenticated()) {
     const currentUsername = req.user.username;
     const result = User.findOne({ username: currentUsername }, function(err, foundUser) {
@@ -256,11 +258,11 @@ app.post("/createGroup", function(req, res) {
 });
 
 app.post("/deleteMember", function(req, res) {
-  const requestedUserId = req.body.userId;
-  const requestedGroupId = req.body.groupId;
-  const requestedMemberId = req.body.memberId;
-
   if(req.isAuthenticated()) {
+    const requestedUserId = req.body.userId;
+    const requestedGroupId = req.body.groupId;
+    const requestedMemberId = req.body.memberId;
+
     const result = User.findOne({ _id: requestedUserId }, function(err, foundUser) {
       const foundGroup = foundUser.groups.id(requestedGroupId);
       foundGroup.members.id(requestedMemberId).remove();
@@ -273,11 +275,11 @@ app.post("/deleteMember", function(req, res) {
 });
 
 app.post("/deleteGroup", function(req, res) {
-  const requestedUserId = req.body.userId;
-  const requestedGroupId = req.body.groupId;
-
   if(req.isAuthenticated()) {
-    const result = User.findOne({ _id: requestedUserId }, function(err, foundUser) {
+    const currentUsername = req.user.username;
+    const requestedGroupId = req.body.groupId;
+
+    const result = User.findOne({ username: currentUsername }, function(err, foundUser) {
       const foundGroup = foundUser.groups.id(requestedGroupId);
       foundGroup.remove();
       foundUser.save();
@@ -289,9 +291,9 @@ app.post("/deleteGroup", function(req, res) {
 });
 
 
-// -------------------------
-// REQUESTS - MEMBERS
-// -------------------------
+// ----------------------------
+// GET/POST REQUESTS - MEMBERS
+// ----------------------------
 app.get("/:userId/:groupId/join-group", function(req, res) {
   res.render("join");
 });

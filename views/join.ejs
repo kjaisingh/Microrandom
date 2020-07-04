@@ -10,7 +10,26 @@
 </div>
 
 <div class="center-div">
-  <p>Let's do this!</p>
+  <form>
+    <div class="form-group">
+      <label for="joinGroupName">Full Name</label>
+      <input type="name" class="form-control" id="joinGroupName" placeholder="Enter full name here">
+    </div>
+    <div class="form-group">
+      <label for="joinGroupEmail">Email Address</label>
+      <input type="email" class="form-control" id="joinGroupEmail" placeholder="Enter email here">
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Ethnicity</label>
+      <select class="form-control" id="exampleFormControlSelect1">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+    </div>
+  </form>
 </div>
 
 <%- include('partials/footer') %>

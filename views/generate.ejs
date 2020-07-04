@@ -32,7 +32,7 @@
             <h5 class="card-title text-muted text-uppercase text-center"><%= item.description %></h5>
             <h6 class="card-price text-center"><%= item.name %></span></h6>
             <hr>
-            <a href="/<%=userId%>/<%=item._id%>/generate" class="btn btn-block btn-primary text-uppercase mt-auto">Choose</a>
+            <a href="/<%=item._id%>/generate" class="btn btn-block btn-primary text-uppercase mt-auto">Choose</a>
             <div class="groupdelete">
               <form action="/deleteGroup" method="post">
                 <button type="submit" name="deleteButton" class="btn">
