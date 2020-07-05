@@ -241,7 +241,58 @@ app.get("/:groupId/generate", function(req, res) {
 });
 
 app.get("/:groupId/options", function(req, res) {
-  res.render("options");
+  res.render("options", { groupId: req.params.groupId, groupings: [] });
+});
+
+app.get("/view", function(req, res) {
+  if(req.isAuthenticated()) {
+    console.log("Im here");
+    res.render("view");
+  } else {
+    res.redirect(req.baseUrl + "/login");
+  }
+});
+
+app.get("/:groupId/create-num-groups", function(req, res) {
+  if(req.isAuthenticated()) {
+    const currentUsername = req.user.username;
+    const requestedGroupId = req.params.groupId;
+    const requestedNumGroups = req.query.inputNumGroups;
+    console.log(requestedNumGroups);
+
+    const result = User.findOne({ username: currentUsername }, function(err, foundUser) {
+      const foundGroup = foundUser.groups.id(requestedGroupId);
+      const foundMembers = foundGroup.members;
+      const groupings = [];
+
+      // create groupings here
+
+      res.render("view", { groupings: groupings });
+    });
+  } else {
+    res.redirect(req.baseUrl + "/login");
+  }
+});
+
+app.get("/:groupId/create-max-group", function(req, res) {
+  if(req.isAuthenticated()) {
+    const currentUsername = req.user.username;
+    const requestedGroupId = req.params.groupId;
+    const requestedMaxGroup = req.query.inputMaxGroup;
+    console.log(requestedMaxGroup);
+
+    const result = User.findOne({ username: currentUsername }, function(err, foundUser) {
+      const foundGroup = foundUser.groups.id(requestedGroupId);
+      const foundMembers = foundGroup.members;
+      const groupings = [];
+
+      // create groupings here
+
+      res.render("view", { groupings: groupings });
+    });
+  } else {
+    res.redirect(req.baseUrl + "/login");
+  }
 });
 
 
@@ -312,26 +363,41 @@ app.post("/:userId/:groupId/joined-group", function(req, res) {
   const requestedUserName = req.body.joinGroupName;
   const requestedUserEmail = req.body.joinGroupEmail;
   const requestedUserGender = req.body.joinGroupGender;
-  const requestedUserAge = req.body.joinGroupAge;
+
+  const inputUserAge = req.body.joinGroupAge;
+  var requestedUserAge;
+  switch(inputUserAge) {
+    case "< 18":
+      requestedUserAge = 16.5;
+      break;
+    case "18-19":
+      requestedUserAge = 18.5;
+      break;
+    case "20-21":
+      requestedUserAge = 20.5;
+      break;
+    case "22-23":
+      requestedUserAge = 22.5;
+      break;
+    case "24+":
+      requestedUserAge = 24.5;
+      break;
+    default:
+      requestedUserAge = 20.5;
+  }
+
   const requestedUserEthnicity = req.body.joinGroupEthnicity;
   const requestedUserReligion = req.body.joinGroupReligion;
-
-  console.log(requestedUserName);
-  console.log(requestedUserEmail);
-  console.log(requestedUserGender);
-  console.log(requestedUserAge);
-  console.log(requestedUserEthnicity);
-  console.log(requestedUserReligion);
 
   const result = User.findOne({ _id: requestedUserId }, function(err, foundUser) {
     const foundGroup = foundUser.groups.id(requestedGroupId);
     foundGroup.members.push(new Member({
-      name: "JEFFERY",
-      email: "john@microrandom.com",
-      age: 16.5,
-      gender: "Male",
-      ethnicity: "American Indian",
-      religion: "Christian"
+      name: requestedUserName,
+      email: requestedUserEmail,
+      age: requestedUserAge,
+      gender: requestedUserGender,
+      ethnicity: requestedUserEthnicity,
+      religion: requestedUserReligion
     }));
     foundUser.save();
   });
