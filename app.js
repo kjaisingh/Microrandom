@@ -257,7 +257,7 @@ app.get("/:groupId/create-num-groups", function(req, res) {
 
       const maxGroup = requestedNumGroups;
       const groupings = generateGroups(foundMembers, maxGroup);
-      
+
       res.render("view", { groupings: groupings });
     });
   } else {
@@ -265,7 +265,7 @@ app.get("/:groupId/create-num-groups", function(req, res) {
   }
 });
 
-app.get("/:groupId/create-max-group", function(req, res) {
+/* app.get("/:groupId/create-max-group", function(req, res) {
   if(req.isAuthenticated()) {
     const currentUsername = req.user.username;
     const requestedGroupId = req.params.groupId;
@@ -283,7 +283,7 @@ app.get("/:groupId/create-max-group", function(req, res) {
   } else {
     res.redirect(req.baseUrl + "/login");
   }
-});
+}); */
 
 
 // -------------------------
