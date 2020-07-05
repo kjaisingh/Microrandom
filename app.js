@@ -21,84 +21,91 @@ const Member = require('./models/members');
 // -------------------------
 const memberOne = new Member({
   name: "John Doe",
-  email: "john@microrandom.com"
+  email: "john@microrandom.com",
+  age: 16.5,
+  gender: "Male",
+  ethnicity: "American Indian",
+  religion: "Christian"
 });
 
 const memberTwo = new Member({
   name: "Rohit Singh",
-  email: "rohit@microrandom.com"
+  email: "rohit@microrandom.com",
+  age: 20.5,
+  gender: "Male",
+  ethnicity: "Asian",
+  religion: "Hindu"
 });
 const memberThree = new Member({
   name: "Rebecca Tobey",
-  email: "becca@microrandom.com"
+  email: "becca@microrandom.com",
+  age: 18.5,
+  gender: "Female",
+  ethnicity: "Caucasian",
+  religion: "Jewish"
 });
 const memberFour = new Member({
   name: "Kevin Lee",
-  email: "kevin@microrandom.com"
+  email: "kevin@microrandom.com",
+  age: 24.5,
+  gender: "Male",
+  ethnicity: "Hispanic",
+  religion: "Buddhist"
 });
 const memberFive = new Member({
   name: "Kayla Harris",
-  email: "kayla@microrandom.com"
+  email: "kayla@microrandom.com",
+  age: 20.5,
+  gender: "Female",
+  ethnicity: "African American",
+  religion: "Muslim"
 });
 const memberSix = new Member({
   name: "Jeffery Hughes",
-  email: "jeff@microrandom.com"
+  email: "jeff@microrandom.com",
+  age: 22.5,
+  gender: "Other",
+  ethnicity: "Pacific Islander",
+  religion: "None"
 });
 const memberSeven = new Member({
   name: "Noor Ismail",
-  email: "noor@microrandom.com"
+  email: "noor@microrandom.com",
+  age: 16.5,
+  gender: "Female",
+  ethnicity: "Asian",
+  religion: "Buddhist"
 });
 const memberEight = new Member({
   name: "Obadiye Diallo",
-  email: "obadiye@microrandom.com"
+  email: "obadiye@microrandom.com",
+  age: 18.5,
+  gender: "Male",
+  ethnicity: "American Indian",
+  religion: "Muslim"
 });
 const memberNine = new Member({
   name: "William Barton",
-  email: "will@microrandom.com"
-});
-const memberTen = new Member({
-  name: "Samantha Kim",
-  email: "samantha@microrandom.com"
+  email: "will@microrandom.com",
+  age: 24.5,
+  gender: "Other",
+  ethnicity: "Caucasian",
+  religion: "Other"
 });
 
 const defaultMembersOne = [
-  memberOne, memberTwo, memberThree
-];
-
-const defaultMembersTwo = [
-  memberFour, memberFive, memberSix
-];
-
-const defaultMembersThree = [
-  memberSeven, memberEight
-];
-
-const defaultMembersFour = [
-  memberNine, memberTen
+  memberOne, memberTwo, memberThree,
+  memberFour, memberFive, memberSix,
+  memberSeven, memberEight, memberNine
 ];
 
 const defaultGroupOne = new Group({
   name: "CIS 120",
-  description: "Programming Languages & Technologies.",
+  description: "Programming Languages & Technologies",
   members: defaultMembersOne
 });
-const defaultGroupTwo = new Group({
-  name: "CIS 121",
-  description: "Data Structures & Algorithms.",
-  members: defaultMembersTwo
-});
-const defaultGroupThree = new Group({
-  name: "CIS 160",
-  description: "Mathematics of Computer Science.",
-  members: defaultMembersThree
-});
-const defaultGroupFour = new Group({
-  name: "CIS 240",
-  description: "Computer Architecutre",
-  members: defaultMembersFour
-});
 
-const defaultGroups = [defaultGroupOne, defaultGroupTwo, defaultGroupThree, defaultGroupFour];
+const defaultGroups = [defaultGroupOne];
 
 
 // -------------------------
@@ -233,7 +240,7 @@ app.get("/:groupId/generate", function(req, res) {
   }
 });
 
-app.get("/:userId/:groupId/options", function(req, res) {
+app.get("/:groupId/options", function(req, res) {
   res.render("options");
 });
 
@@ -295,21 +302,46 @@ app.post("/deleteGroup", function(req, res) {
 // GET/POST REQUESTS - MEMBERS
 // ----------------------------
 app.get("/:userId/:groupId/join-group", function(req, res) {
-  res.render("join");
+  res.render("join", { userId: req.params.userId, groupId: req.params.groupId });
+});
+
+app.post("/:userId/:groupId/joined-group", function(req, res) {
+  const requestedUserId = req.params.userId;
+  const requestedGroupId = req.params.groupId;
+
+  const requestedUserName = req.body.joinGroupName;
+  const requestedUserEmail = req.body.joinGroupEmail;
+  const requestedUserGender = req.body.joinGroupGender;
+  const requestedUserAge = req.body.joinGroupAge;
+  const requestedUserEthnicity = req.body.joinGroupEthnicity;
+  const requestedUserReligion = req.body.joinGroupReligion;
+
+  console.log(requestedUserName);
+  console.log(requestedUserEmail);
+  console.log(requestedUserGender);
+  console.log(requestedUserAge);
+  console.log(requestedUserEthnicity);
+  console.log(requestedUserReligion);
+
+  const result = User.findOne({ _id: requestedUserId }, function(err, foundUser) {
+    const foundGroup = foundUser.groups.id(requestedGroupId);
+    foundGroup.members.push(new Member({
+      name: "JEFFERY",
+      email: "john@microrandom.com",
+      age: 16.5,
+      gender: "Male",
+      ethnicity: "American Indian",
+      religion: "Christian"
+    }));
+    foundUser.save();
+  });
+  res.redirect(req.baseUrl + "/");
 });
 
 
 // -------------------------
 // SETUP
 // -------------------------
-// adding new member to a particular group
-/*
-foundUser.groups[0].members.push(new Member({
-  name: "Karan Jaisingh",
-  email: "karan@microrandom.com"
-}));
-foundUser.save();
-*/
 
 app.listen(3000, function() {
   console.log("Server started on port 3000.");
