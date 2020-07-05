@@ -15,6 +15,7 @@ const path = require('path');
 const User = require('./models/users');
 const Group = require('./models/groups');
 const Member = require('./models/members');
+const generateGroups = require('./microrandom.js');
 
 // -------------------------
 // DEFAULTS
@@ -241,16 +242,7 @@ app.get("/:groupId/generate", function(req, res) {
 });
 
 app.get("/:groupId/options", function(req, res) {
-  res.render("options", { groupId: req.params.groupId, groupings: [] });
-});
-
-app.get("/view", function(req, res) {
-  if(req.isAuthenticated()) {
-    console.log("Im here");
-    res.render("view");
-  } else {
-    res.redirect(req.baseUrl + "/login");
-  }
+  res.render("options", { groupId: req.params.groupId });
 });
 
 app.get("/:groupId/create-num-groups", function(req, res) {
@@ -258,15 +250,14 @@ app.get("/:groupId/create-num-groups", function(req, res) {
     const currentUsername = req.user.username;
     const requestedGroupId = req.params.groupId;
     const requestedNumGroups = req.query.inputNumGroups;
-    console.log(requestedNumGroups);
 
     const result = User.findOne({ username: currentUsername }, function(err, foundUser) {
       const foundGroup = foundUser.groups.id(requestedGroupId);
       const foundMembers = foundGroup.members;
-      const groupings = [];
 
-      // create groupings here
-
+      const maxGroup = requestedNumGroups;
+      const groupings = generateGroups(foundMembers, maxGroup);
+      
       res.render("view", { groupings: groupings });
     });
   } else {
@@ -279,14 +270,13 @@ app.get("/:groupId/create-max-group", function(req, res) {
     const currentUsername = req.user.username;
     const requestedGroupId = req.params.groupId;
     const requestedMaxGroup = req.query.inputMaxGroup;
-    console.log(requestedMaxGroup);
 
     const result = User.findOne({ username: currentUsername }, function(err, foundUser) {
       const foundGroup = foundUser.groups.id(requestedGroupId);
       const foundMembers = foundGroup.members;
-      const groupings = [];
 
-      // create groupings here
+      const maxGroup = requestedMaxGroup;
+      const groupings = generateGroups(foundMembers, maxGroup);
 
       res.render("view", { groupings: groupings });
     });
