@@ -1,7 +1,7 @@
 <%- include('partials/header') %>
 <%- include('partials/navigation') %>
 
-<div class="jumbotron text-center">
+<div class="jumbotron center-div text-centered">
   <div class="container">
     <i class="fas fa-hat-wizard fa-3x"></i>
     <h1 class="display-5">View Grouping</h1>
@@ -16,7 +16,7 @@
     <% var i = 0 %>
     <% groupings.forEach(function(item) { %>
       <% if (i === 0) { %>
-          <div class="row d-flex align-items-stretch">
+          <div class="row d-flex align-items-stretch justify-content-center">
       <% } %>
       <div class="col-lg-4 d-flex align-items-stretch">
         <div class="card mb-5 mb-lg-0 h-100 w-100">
@@ -39,9 +39,5 @@
     <%  }) %>
   </div>
 </section>
-
-<div class="text-center">
-  <button class="btn btn-primary text-center">Save</button>
-</div>
 
 <%- include('partials/footer') %>

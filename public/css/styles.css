@@ -1,41 +1,60 @@
+/* -------------------
+GLOBAL
+--------------------*/
 body {
   background-color: #E8ECEF;
+  width: 100%;
 }
 
 .jumbotron {
-  padding-top: 0px;
-  padding-bottom: 0px;
-  margin-bottom: 10px;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-bottom: 10;
 }
 
-.centered {
-    padding-top: 200px;
-    text-align: center;
-}
 
 .navbar {
   background-color: #E8ECEF;
   font-size: 16px;
 }
 
-body {
-  background-color: #E8ECEF;
+.fa {
+  color: #1f1e1c;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
-.group-item {
-  width: 25%;
+.center-div {
+  padding-top: 0;
+  padding-bottom: 0;
+  text-align: center;
+  width: 40%;
+  margin: 0 auto;
 }
 
-.col-lg-4 {
-  margin-top: 20px !important;
+.registration-component {
+  padding-top: 5%;
+  text-align: center;
 }
 
-li {
-    margin-right: 200px;
+.btn-primary {
+  background-color: #1f1e1c;
 }
 
+.bottom-btn {
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
+
+/* -------------------
+CARDS
+--------------------*/
 section.pricing {
   background-color: #E8ECEF;
+}
+
+.card {
+  padding-top: 0px;
 }
 
 .pricing .card {
@@ -43,6 +62,10 @@ section.pricing {
   border-radius: 1rem;
   transition: all 0.2s;
   box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+}
+
+.pricing .row {
+  padding-top: 20px;
 }
 
 .pricing hr {
@@ -94,8 +117,59 @@ section.pricing {
   }
 }
 
+/* -------------------
+FORMS
+--------------------*/
+.form-group {
+  margin-bottom: 7%;
+}
+
+input[type="range"] {
+  width: 75%;
+  padding-top: 3%;
+  padding-bottom: 3%;
+}
+
+#outputNumGroupsId {
+  font-size: 20px;
+}
+
+.text-label {
+  font-weight: bold;
+}
+
+#join-jumbotron {
+  padding-top: 20px;
+}
+
+#join-button {
+  margin-bottom: 50px;
+}
+
+/* -------------------
+HOME PAGE
+--------------------*/
+.home {
+    padding-top: 200px;
+    text-align: center;
+}
+
+/* -------------------
+GROUP PAGE
+--------------------*/
+.group-item {
+  width: 25%;
+}
+
+.col-lg-4 {
+  margin-top: 20 !important;
+}
+
+li {
+    margin-right: 200px;
+}
+
 .table {
-  margin-top: 3%;
   text-align: center;
 }
 
@@ -115,16 +189,4 @@ section.pricing {
 
 .inline-block-child {
   display: inline-block;
-}
-
-.center-div {
-  padding-top: 0px;
-  padding-bottom: 0px;
-  text-align: center;
-  width: 40%;
-  margin: 0 auto;
-}
-
-.form-group {
-  margin-bottom: 7%;
 }

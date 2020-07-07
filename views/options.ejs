@@ -10,10 +10,15 @@
 </div>
 
 <div class="container text-center">
+  <h3 class="display-6">Select Number of Groups</h3>
   <form action="/<%=groupId%>/create-num-groups" method="get">
-    <div class="form-group">
-      <input type="range" name="inputNumGroups" id="inputNumGroupsId" value="10" min="1" max="20" oninput="outputNumGroupsId.value = inputNumGroupsId.value">
-      <output name="outputNumGroups" id="outputNumGroupsId">10</output>
+    <div class="form-group slider">
+      <div class="">
+        <input type="range" name="inputNumGroups" id="inputNumGroupsId" value="10" min="1" max="20" oninput="outputNumGroupsId.value = inputNumGroupsId.value">
+      </div>
+      <div>
+        <output name="outputNumGroups" id="outputNumGroupsId">10</output>
+      </div>
     </div>
     <div class="form-group text-center">
       <input type="submit" class="btn btn-primary text-center"></input>

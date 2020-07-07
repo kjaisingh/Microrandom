@@ -28,7 +28,6 @@ const memberOne = new Member({
   ethnicity: "American Indian",
   religion: "Christian"
 });
-
 const memberTwo = new Member({
   name: "Rohit Singh",
   email: "rohit@microrandom.com",
@@ -94,19 +93,112 @@ const memberNine = new Member({
   religion: "Other"
 });
 
-const defaultMembersOne = [
-  memberOne, memberTwo, memberThree,
-  memberFour, memberFive, memberSix,
-  memberSeven, memberEight, memberNine
-];
-
-const defaultGroupOne = new Group({
-  name: "CIS 120",
-  description: "Programming Languages & Technologies",
-  members: defaultMembersOne
+const memberTen = new Member({
+  name: "Josh Philips",
+  email: "josh@microrandom.com",
+  age: 16.5,
+  gender: "Male",
+  ethnicity: "Asian",
+  religion: "Christian"
+});
+const memberEleven = new Member({
+  name: "Kabir Surya",
+  email: "kabir@microrandom.com",
+  age: 22.5,
+  gender: "Male",
+  ethnicity: "Asian",
+  religion: "Hindu"
+});
+const memberTwelve = new Member({
+  name: "Cassandra Price",
+  email: "cass@microrandom.com",
+  age: 16.5,
+  gender: "Female",
+  ethnicity: "Caucasian",
+  religion: "Jewish"
+});
+const memberThirteen = new Member({
+  name: "Gregory Pzyrcowski",
+  email: "gregorys@microrandom.com",
+  age: 24.5,
+  gender: "Male",
+  ethnicity: "Hispanic",
+  religion: "Jewish"
+});
+const memberFourteen = new Member({
+  name: "Samantha Harris",
+  email: "sammy@microrandom.com",
+  age: 20.5,
+  gender: "Female",
+  ethnicity: "African American",
+  religion: "Christian"
+});
+const memberFifteen = new Member({
+  name: "Kevin Jordan",
+  email: "kev@microrandom.com",
+  age: 22.5,
+  gender: "Male",
+  ethnicity: "Pacific Islander",
+  religion: "Other"
+});
+const memberSixteen = new Member({
+  name: "Muhammad Ebrahim",
+  email: "ebrahim@microrandom.com",
+  age: 16.5,
+  gender: "Male",
+  ethnicity: "Asian",
+  religion: "Buddhist"
+});
+const memberSeventeen = new Member({
+  name: "India Philips",
+  email: "indieindia@microrandom.com",
+  age: 18.5,
+  gender: "Female",
+  ethnicity: "American Indian",
+  religion: "Muslim"
+});
+const memberEighteen = new Member({
+  name: "Bill Border",
+  email: "billy@microrandom.com",
+  age: 24.5,
+  gender: "Other",
+  ethnicity: "Caucasian",
+  religion: "Other"
+});
+const memberNineteen = new Member({
+  name: "Carlson Hammer",
+  email: "carl@microrandom.com",
+  age: 18.5,
+  gender: "Male",
+  ethnicity: "Caucasian",
+  religion: "Christian"
+});
+const memberTwenty = new Member({
+  name: "Koa Lulua",
+  email: "koa@microrandom.com",
+  age: 24.5,
+  gender: "Other",
+  ethnicity: "Pacific Islander",
+  religion: "Muslim"
 });
 
-const defaultGroups = [defaultGroupOne];
+const defaultMembers = [
+  memberOne, memberTwo, memberThree,
+  memberFour, memberFive, memberSix,
+  memberSeven, memberEight, memberNine,
+  memberTen, memberEleven, memberTwelve,
+  memberThirteen, memberFourteen, memberFifteen,
+  memberSixteen, memberSeventeen, memberEighteen,
+  memberNineteen, memberTwenty
+];
+
+const defaultGroup = new Group({
+  name: "Microrandom",
+  description: "Your default example group.",
+  members: defaultMembers
+});
+
+const defaultGroups = [defaultGroup];
 
 
 // -------------------------
@@ -264,26 +356,6 @@ app.get("/:groupId/create-num-groups", function(req, res) {
     res.redirect(req.baseUrl + "/login");
   }
 });
-
-/* app.get("/:groupId/create-max-group", function(req, res) {
-  if(req.isAuthenticated()) {
-    const currentUsername = req.user.username;
-    const requestedGroupId = req.params.groupId;
-    const requestedMaxGroup = req.query.inputMaxGroup;
-
-    const result = User.findOne({ username: currentUsername }, function(err, foundUser) {
-      const foundGroup = foundUser.groups.id(requestedGroupId);
-      const foundMembers = foundGroup.members;
-
-      const maxGroup = requestedMaxGroup;
-      const groupings = generateGroups(foundMembers, maxGroup);
-
-      res.render("view", { groupings: groupings });
-    });
-  } else {
-    res.redirect(req.baseUrl + "/login");
-  }
-}); */
 
 
 // -------------------------

@@ -21,6 +21,14 @@
   </div>
 </div>
 
+<div class="center-div">
+  <a href="/<%=groupItem._id%>/options">
+    <button name="deleteButton" class="btn bottom-btn">
+      Next <i class="fa fa-check"></i>
+    </button>
+  </a>
+</div>
+
 <div class="membertable">
   <% const numMembers = groupItem.members.length %>
   <% var index = 0 %>
@@ -65,14 +73,5 @@ function copyToClipboard(element) {
   $temp.remove();
 }
 </script>
-
-
-<div class="center-div">
-  <a href="/<%=groupItem._id%>/options">
-    <button name="deleteButton" class="btn">
-      Next <i class="fa fa-check"></i>
-    </button>
-  </a>
-</div>
 
 <%- include('partials/footer') %>

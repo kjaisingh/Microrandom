@@ -1,6 +1,6 @@
 <%- include('partials/header') %>
 
-<div class="jumbotron text-center">
+<div class="jumbotron text-center" id="join-jumbotron">
   <div class="container">
     <i class="fas fa-hat-wizard fa-3x"></i>
     <h1 class="display-5">Join a Group</h1>
@@ -12,18 +12,18 @@
   <form action="/<%=userId%>/<%=groupId%>/joined-group" method="post">
 
     <div class="form-group">
-      <label for="joinGroupName">Full Name</label>
+      <label class="text-label" for="joinGroupName">Full Name</label>
       <input type="name" class="form-control" name="joinGroupName" placeholder="Enter full name here" required>
     </div>
 
     <div class="form-group">
-      <label for="joinGroupEmail">Email Address</label>
+      <label class="text-label" for="joinGroupEmail">Email Address</label>
       <input type="email" class="form-control" name="joinGroupEmail" placeholder="Enter email here" required>
     </div>
 
-    <div>
+    <div class="form-group">
       <div>
-        <label for="genderOption">Gender</label>
+        <label for="genderOption" class="text-label">Gender</label>
       </div>
       <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="joinGroupGender" value="Male" required>
@@ -40,7 +40,7 @@
     </div>
 
     <div class="form-group">
-      <label for="joinGroupAge">Age</label>
+      <label for="joinGroupAge" class="text-label">Age</label>
       <select class="form-control" name="joinGroupAge">
         <option>< 18</option>
         <option>18-19</option>
@@ -51,7 +51,7 @@
     </div>
 
     <div class="form-group">
-      <label for="joinGroupEthnicity">Ethnicity</label>
+      <label for="joinGroupEthnicity" class="text-label">Ethnicity</label>
       <select class="form-control" name="joinGroupEthnicity">
         <option>American Indian</option>
         <option>Asian</option>
@@ -63,7 +63,7 @@
     </div>
 
     <div class="form-group">
-      <label for="joinGroupReligion">Religion</label>
+      <label for="joinGroupReligion" class="text-label">Religion</label>
       <select class="form-control" name="joinGroupReligion">
         <option>None</option>
         <option>Christian</option>
@@ -76,7 +76,7 @@
     </div>
 
     <div class="text-center">
-      <button type="submit" class="btn btn-primary text-center">Join</button>
+      <button type="submit" class="btn btn-primary text-center" id="join-button">Join</button>
     </div>
 
   </form>

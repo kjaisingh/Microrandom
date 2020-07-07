@@ -1,12 +1,21 @@
 <%- include('partials/header') %>
-<div class="container mt-5">
-  <h1>Register</h1>
 
-  <div class="row">
+<nav class="navbar navbar-expand-lg">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/"><i class="fa fa-arrow-left fa-2x"></i></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container registration-component">
+  <h1>Register</h1>
+  <div class="row justify-content-center">
     <div class="col-sm-8">
       <div class="card">
         <div class="card-body">
-
           <form action="/register" method="POST">
             <div class="form-group">
               <label for="name">Full Name</label>
@@ -22,22 +31,9 @@
             </div>
             <button type="submit" class="btn btn-dark">Register</button>
           </form>
-
         </div>
       </div>
     </div>
-
-    <!-- <div class="col-sm-4">
-      <div class="card social-block">
-        <div class="card-body">
-          <a class="btn btn-block" href="/auth/google" role="button">
-            <i class="fab fa-google"></i>
-            Sign Up with Google
-          </a>
-        </div>
-      </div>
-    </div> -->
-
   </div>
 </div>
 
