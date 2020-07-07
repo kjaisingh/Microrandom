@@ -9,8 +9,38 @@
   </div>
 </div>
 
+<section class="pricing py-5">
+  <div class="container">
+    <% const numGroups = groupings.length %>
+    <% var index = 0 %>
+    <% var i = 0 %>
+    <% groupings.forEach(function(item) { %>
+      <% if (i === 0) { %>
+          <div class="row d-flex align-items-stretch">
+      <% } %>
+      <div class="col-lg-4 d-flex align-items-stretch">
+        <div class="card mb-5 mb-lg-0 h-100 w-100">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title text-muted text-uppercase text-center"><%= item.description %></h5>
+            <h6 class="card-price text-center">Group #<%=index + 1%></span></h6>
+            <hr>
+            <% groupings[index].forEach(function(member) { %>
+              <h5 class="card-title text-muted text-uppercase text-center"><%= member.name %></h5>
+            <%  }) %>
+          </div>
+        </div>
+      </div>
+      <% i = i + 1%>
+      <% index = index + 1%>
+      <% if (i === 3 || index === numGroups) { %>
+        </div>
+        <% i = 0 %>
+      <% } %>
+    <%  }) %>
+  </div>
+</section>
+
 <div class="text-center">
-  <h1>First Element: <%=groupings[0][0][0].name%></h1>
   <button class="btn btn-primary text-center">Save</button>
 </div>
 
