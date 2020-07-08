@@ -1,6 +1,4 @@
 # Microrandom
-
-# Microrandom
 ### Optimizing the randomization process.
 
 Microrandom is an intelligent group generator web application intended to promote diversity in a typically 'random' process. 
