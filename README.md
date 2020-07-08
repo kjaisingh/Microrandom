@@ -15,17 +15,9 @@ The web application is built using Bootstrap, Node and MongoDB, and is currently
 * Utilizes MongoDB Atlas for cloud database storage.
 
 **App Interface**
-<table>
-  <tr>
-      <td><img src="assets/screenshots/Home.png" width="450"></td>
-      <td><img src="assets/screenshots/Groups.png" width="450"></td>
-  </tr>
-  <tr>
-      <td><img src="assets/screenshots/Creation.png" width="450"></td>
-      <td><img src="assets/screenshots/List.png" width="450"></td>
-  </tr>
-  <tr>
-      <td><img src="assets/screenshots/Groupings.png" width="450"></td>
-      <td><img src="assets/screenshots/Join.png" width="450"></td>
-  </tr>
-</table>
+<img src="assets/screenshots/Home.png">
+<img src="assets/screenshots/Groups.png">
+<img src="assets/screenshots/Creation.png">
+<img src="assets/screenshots/List.png">
+<img src="assets/screenshots/Groupings.png">
+<img src="assets/screenshots/Join.png">
