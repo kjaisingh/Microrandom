@@ -223,7 +223,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-mongoose.connect("mongodb://localhost:27017/microrandomDB", { useNewUrlParser: true, useUnifiedTopology: true});
+const connectionLink = "mongodb+srv://admin-karan:" + process.env.ADMINPASSWORD + "@microrandom.rmmmc.mongodb.net/microrandomDB";
+mongoose.connect(connectionLink, { useNewUrlParser: true, useUnifiedTopology: true});
+console.log(connectionLink);
 mongoose.set('useCreateIndex', true);
 
 passport.use(User.createStrategy());
