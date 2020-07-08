@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 
 const memberSchema = new mongoose.Schema ({
   name: { type: String },
-  email: { type: String },
+  email: { type: String},
   age: { type: Number,
     enum: [16.5, 18.5, 20.5, 22.5, 24.5] },
   gender: { type: String,

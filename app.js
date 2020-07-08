@@ -11,6 +11,7 @@ const ejs = require("ejs");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
+var flash = require("connect-flash");
 const path = require('path');
 const User = require('./models/users');
 const Group = require('./models/groups');
@@ -220,6 +221,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 mongoose.connect("mongodb://localhost:27017/microrandomDB", { useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.set('useCreateIndex', true);
@@ -241,7 +243,7 @@ app.get("/login", function(req, res) {
 });
 
 app.get("/register", function(req, res) {
-  res.render("register");
+  res.render("register", {errorText: ""});
 });
 
 app.get("/logout", function(req, res) {
@@ -262,8 +264,22 @@ app.post("/register", function(req, res) {
   req.body.password,
   function(err, user) {
     if (err) {
-      console.log(err);
-      res.redirect("/register");
+      var errorTextString;
+      if (err.name === "UserExistsError") {
+        errorTextString = "A user with the given email already exists.";
+      } else if (err.name === "MissingUsernameError") {
+        errorTextString = "A valid name must be provided.";
+      } else if (err.name == 'ValidationError') {
+        var errString = err.message;
+        if (errString.includes("required")) {
+          errorTextString = "All fields are required before account creation."
+        } else if (errString.includes("2")) {
+          errorTextString = "A minimum of two characters are required for all fields."
+        } else if (errString.includes("20")) {
+          errorTextString = "A maximum of 20 characters are allowed for the user name."
+        }
+      }
+      return res.render("register", {errorText: errorTextString});
     } else {
       passport.authenticate("local")(req, res, function() {
         res.redirect("/generate");
