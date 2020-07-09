@@ -241,7 +241,7 @@ app.get("/", function(req, res) {
 });
 
 app.get("/login", function(req, res) {
-  res.render("login");
+  res.render("login", {errorText: ""});
 });
 
 app.get("/register", function(req, res) {
@@ -280,6 +280,8 @@ app.post("/register", function(req, res) {
         } else if (errString.includes("20")) {
           errorTextString = "A maximum of 20 characters are allowed for the user name."
         }
+      } else {
+        errorTextString = "There was an error processing your request."
       }
       return res.render("register", {errorText: errorTextString});
     } else {
@@ -291,18 +293,36 @@ app.post("/register", function(req, res) {
 });
 
 app.post("/login", function(req, res) {
+  var authenticated = false;
   const user = new User({
     username: req.body.username,
     password: req.body.password
   });
   req.login(user, function(err) {
     if (err) {
-      console.log(err);
+      if (err.name === "UserExistsError") {
+        errorTextString = "A user with the given email already exists.";
+      } else if (err.name === "MissingUsernameError") {
+        errorTextString = "A valid name must be provided.";
+      } else if (err.name == 'ValidationError') {
+        var errString = err.message;
+        if (errString.includes("required")) {
+          errorTextString = "All fields are required."
+        }
+      } else {
+        errorTextString = "Incorrect details inputted. Please try again"
+      }
+      return res.render("login", {errorText: errorTextString});
     } else {
-      passport.authenticate("local");
       passport.authenticate("local")(req, res, function() {
+        authenticated = true;
         res.redirect("/generate");
       });
+      setTimeout(function (){
+        if (!authenticated) {
+          return res.render("login", {errorText: "Incorrect details inputted. Please try again"});
+        }
+      }, 1000);
     }
   });
 });
