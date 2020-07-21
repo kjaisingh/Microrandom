@@ -13,9 +13,9 @@ The web application is built using Bootstrap, Node and MongoDB, and is hosted he
 * Provides a short survey to new members, asking for basic demographic details which are stored securely.
 * Utilizes a genetic algorithm to determine optimal groupings that demonstrate the highest degree of diversity.
 * Employs secure user and password authentication via Passport.
-* Utilizes MongoDB Atlas for cloud database storage.
+* Utilizes MongoDB Atlas for cloud database storage and Heroku for hosting.
 
-**Build Instructions**
+**Build Instructions for Local Execution**
 
 After cloning the repository, cd into it and install the node modules as
 ~~~~
