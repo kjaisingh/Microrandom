@@ -206,6 +206,8 @@ const defaultGroups = [defaultGroup];
 // INITIALIZATION
 // -------------------------
 const app = express();
+const SECRET_VAL = process.env.SECRET;
+const PASSWORD_VAL = process.env.ADMINPASSWORD;
 
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
@@ -214,7 +216,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(session({
-  secret: "oursecret",
+  secret: SECRET_VAL,
   resave: false,
   saveUninitialized: true
 }));
@@ -223,7 +225,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-const connectionLink = "mongodb+srv://admin-karan:helloworld@microrandom.rmmmc.mongodb.net/microrandomDB";
+const connectionLink = "mongodb+srv://admin-karan:" + PASSWORD_VAL + "@microrandom.rmmmc.mongodb.net/microrandomDB";
 console.log(connectionLink);
 mongoose.connect(connectionLink, { useNewUrlParser: true, useUnifiedTopology: true});
 console.log(connectionLink);
