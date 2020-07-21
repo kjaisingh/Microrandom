@@ -224,6 +224,7 @@ app.use(passport.session());
 app.use(flash());
 
 const connectionLink = "mongodb+srv://admin-karan:" + process.env.ADMINPASSWORD + "@microrandom.rmmmc.mongodb.net/microrandomDB";
+console.log(connectionLink);
 mongoose.connect(connectionLink, { useNewUrlParser: true, useUnifiedTopology: true});
 console.log(connectionLink);
 mongoose.set('useCreateIndex', true);
