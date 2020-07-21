@@ -1,1 +1,3 @@
 closure_linter
+closure-linter
+linter
