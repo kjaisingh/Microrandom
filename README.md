@@ -17,7 +17,7 @@ The web application is built using Bootstrap, Node and MongoDB, and is hosted he
 
 **Build Instructions for Local Execution**
 
-After cloning the repository, cd into it and install the node modules as
+After cloning the repository, cd into it and install the node modules as:
 ~~~~
 npm install
 ~~~~~~~~ 
